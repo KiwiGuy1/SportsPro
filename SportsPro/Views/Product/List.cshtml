@@ -1,0 +1,57 @@
+﻿@model IEnumerable<SportsPro.Models.Product>
+
+@{
+    ViewData["Title"] = "Product Manager";
+}
+
+<h1>List</h1>
+
+<div class="text-end mb-3">
+    <a asp-action="Create" class="btn btn-primary">Add Product</a>
+</div>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.YearlyPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReleaseDate)
+            </th>
+            <th class="text-center"></th>
+            <th class="text-center"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.YearlyPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReleaseDate)
+                </td>
+                <td class="text-center">
+                    <a asp-action="Edit" asp-route-id="@item.ProductID" class="btn btn-sm btn-primary">Edit</a>
+                </td>
+                <td class="text-center">
+                    <a asp-action="Delete" asp-route-id="@item.ProductID" class="btn btn-sm btn-primary">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
