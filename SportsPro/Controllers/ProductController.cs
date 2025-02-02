@@ -47,7 +47,8 @@ namespace SportsPro.Controllers
         // GET: Product/Create
         public IActionResult Create()
         {
-            return View();
+            var model = new Product(); // This ensures ReleaseDate is set to DateTime.Now
+            return View(model);
         }
 
         // POST: Product/Create
