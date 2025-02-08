@@ -45,7 +45,7 @@ namespace SportsPro.Models
         public string CountryID { get; set; } = string.Empty;
         // foreign key property
         [ValidateNever]
-        public Country Country { get; set; } = null!;           // navigation property
+        public Country? Country { get; set; } = null!;           // navigation property
 
         public string FullName => FirstName + " " + LastName;   // read-only property
 	}

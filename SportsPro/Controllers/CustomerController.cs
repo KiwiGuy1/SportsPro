@@ -60,26 +60,19 @@ namespace SportsPro.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         public IActionResult Create(Customer model)
-        {
-            if (model.Country == null) 
-            {
-                model.Country = new Country(); 
-                model.Country.CountryID = model.CountryID;
-            }
+        { 
             if (ModelState.IsValid)
             {
                 model.Country = _context.Countries.Find(model.CountryID);
                 _context.Add(model);
                 _context.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(List));
             }
 
             // Reload the countries list if the form reloads
             ViewBag.Countries = _context.Countries.ToList();
             return View(model);
         }
-
-
 
         // GET: Customers/Edit/5
         public async Task<IActionResult> Edit(int? id)
