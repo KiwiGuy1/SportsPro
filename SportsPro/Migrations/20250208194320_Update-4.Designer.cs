@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SportsPro.Models;
 
@@ -11,9 +12,10 @@ using SportsPro.Models;
 namespace SportsPro.Migrations
 {
     [DbContext(typeof(SportsProContext))]
-    partial class SportsProContextModelSnapshot : ModelSnapshot
+    [Migration("20250208194320_Update-4")]
+    partial class Update4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,7 +35,7 @@ namespace SportsPro.Migrations
 
                     b.HasKey("CountryID");
 
-                    b.ToTable("Countries", (string)null);
+                    b.ToTable("Countries");
 
                     b.HasData(
                         new
@@ -284,7 +286,7 @@ namespace SportsPro.Migrations
 
                     b.HasIndex("CountryID");
 
-                    b.ToTable("Customers", (string)null);
+                    b.ToTable("Customers");
 
                     b.HasData(
                         new
@@ -419,7 +421,7 @@ namespace SportsPro.Migrations
 
                     b.HasIndex("TechnicianID");
 
-                    b.ToTable("Incidents", (string)null);
+                    b.ToTable("Incidents");
 
                     b.HasData(
                         new
@@ -490,7 +492,7 @@ namespace SportsPro.Migrations
 
                     b.HasKey("ProductID");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
 
                     b.HasData(
                         new
@@ -574,7 +576,7 @@ namespace SportsPro.Migrations
 
                     b.HasKey("TechnicianID");
 
-                    b.ToTable("Technicians", (string)null);
+                    b.ToTable("Technicians");
 
                     b.HasData(
                         new

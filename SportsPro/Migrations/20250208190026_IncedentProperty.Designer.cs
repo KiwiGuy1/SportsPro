@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SportsPro.Models;
 
@@ -11,9 +12,10 @@ using SportsPro.Models;
 namespace SportsPro.Migrations
 {
     [DbContext(typeof(SportsProContext))]
-    partial class SportsProContextModelSnapshot : ModelSnapshot
+    [Migration("20250208190026_IncedentProperty")]
+    partial class IncedentProperty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,7 +35,7 @@ namespace SportsPro.Migrations
 
                     b.HasKey("CountryID");
 
-                    b.ToTable("Countries", (string)null);
+                    b.ToTable("Countries");
 
                     b.HasData(
                         new
@@ -284,7 +286,7 @@ namespace SportsPro.Migrations
 
                     b.HasIndex("CountryID");
 
-                    b.ToTable("Customers", (string)null);
+                    b.ToTable("Customers");
 
                     b.HasData(
                         new
@@ -401,6 +403,14 @@ namespace SportsPro.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("ProductID")
                         .HasColumnType("int");
 
@@ -419,7 +429,7 @@ namespace SportsPro.Migrations
 
                     b.HasIndex("TechnicianID");
 
-                    b.ToTable("Incidents", (string)null);
+                    b.ToTable("Incidents");
 
                     b.HasData(
                         new
@@ -429,6 +439,8 @@ namespace SportsPro.Migrations
                             DateClosed = new DateTime(2020, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateOpened = new DateTime(2020, 1, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Media appears to be bad.",
+                            FirstName = "",
+                            LastName = "",
                             ProductID = 1,
                             TechnicianID = 11,
                             Title = "Could not install"
@@ -439,6 +451,8 @@ namespace SportsPro.Migrations
                             CustomerID = 1002,
                             DateOpened = new DateTime(2020, 1, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Received error message 415 while trying to import data from previous version.",
+                            FirstName = "",
+                            LastName = "",
                             ProductID = 4,
                             TechnicianID = 14,
                             Title = "Error importing data"
@@ -450,6 +464,8 @@ namespace SportsPro.Migrations
                             DateClosed = new DateTime(2020, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateOpened = new DateTime(2020, 1, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Setup failed with code 104.",
+                            FirstName = "",
+                            LastName = "",
                             ProductID = 6,
                             TechnicianID = 15,
                             Title = "Could not install"
@@ -460,6 +476,8 @@ namespace SportsPro.Migrations
                             CustomerID = 1010,
                             DateOpened = new DateTime(2020, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Program fails with error code 510, unable to open database.",
+                            FirstName = "",
+                            LastName = "",
                             ProductID = 3,
                             TechnicianID = -1,
                             Title = "Error launching program"
@@ -490,7 +508,7 @@ namespace SportsPro.Migrations
 
                     b.HasKey("ProductID");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
 
                     b.HasData(
                         new
@@ -574,7 +592,7 @@ namespace SportsPro.Migrations
 
                     b.HasKey("TechnicianID");
 
-                    b.ToTable("Technicians", (string)null);
+                    b.ToTable("Technicians");
 
                     b.HasData(
                         new

@@ -6,23 +6,11 @@
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
+<table class="table table-bordered table-striped">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateOpened)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateClosed)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Customer)
@@ -31,9 +19,8 @@
                 @Html.DisplayNameFor(model => model.Product)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Technician)
+                @Html.DisplayNameFor(model => model.DateOpened)
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -43,29 +30,25 @@
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateOpened)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateClosed)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Customer.CustomerID)
+                @Html.DisplayFor(modelItem => item.Customer.FullName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Product.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Technician.Email)
+                @Html.DisplayFor(modelItem => item.DateOpened)
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IncidentID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IncidentID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IncidentID">Delete</a>
+            <td class="text-center">
+                <a asp-action="Edit" class="btn btn-sm btn-primary" asp-route-id="@item.IncidentID">Edit</a>
+            </td>
+             <td class="text-center">
+                <a asp-action="Delete" class="btn btn-sm btn-primary" asp-route-id="@item.IncidentID">Delete</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+<p >
+    <a class="btn btn-primary" asp-action="Create">Add Incident</a>
+</p>
