@@ -49,18 +49,16 @@ namespace SportsPro.Controllers
         // GET: Incidents/Create
         public IActionResult Create()
         {
-            ViewData["CustomerID"] = new SelectList(_context.Customers, "CustomerID", "CustomerID");
+            ViewData["CustomerID"] = new SelectList(_context.Customers, "CustomerID", "FullName");
             ViewData["ProductID"] = new SelectList(_context.Products, "ProductID", "Name");
             ViewData["TechnicianID"] = new SelectList(_context.Technicians, "TechnicianID", "Email");
             return View();
         }
 
         // POST: Incidents/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IncidentID,Title,Description,DateOpened,DateClosed,CustomerID,ProductID,TechnicianID")] Incident incident)
+        public async Task<IActionResult> Create([Bind("Title,Description,DateOpened,DateClosed,CustomerID,ProductID,TechnicianID")] Incident incident)
         {
             if (ModelState.IsValid)
             {
@@ -68,7 +66,8 @@ namespace SportsPro.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(List));
             }
-            ViewData["CustomerID"] = new SelectList(_context.Customers, "CustomerID", "CustomerID", incident.CustomerID);
+
+            ViewData["CustomerID"] = new SelectList(_context.Customers, "CustomerID", "FullName", incident.CustomerID);
             ViewData["ProductID"] = new SelectList(_context.Products, "ProductID", "Name", incident.ProductID);
             ViewData["TechnicianID"] = new SelectList(_context.Technicians, "TechnicianID", "Email", incident.TechnicianID);
             return View(incident);
@@ -94,8 +93,6 @@ namespace SportsPro.Controllers
         }
 
         // POST: Incidents/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("IncidentID,Title,Description,DateOpened,DateClosed,CustomerID,ProductID,TechnicianID")] Incident incident)
@@ -166,14 +163,14 @@ namespace SportsPro.Controllers
             {
                 _context.Incidents.Remove(incident);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(List));
         }
 
         private bool IncidentExists(int id)
         {
-          return (_context.Incidents?.Any(e => e.IncidentID == id)).GetValueOrDefault();
+            return (_context.Incidents?.Any(e => e.IncidentID == id)).GetValueOrDefault();
         }
     }
 }
