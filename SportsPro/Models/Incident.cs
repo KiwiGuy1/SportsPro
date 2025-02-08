@@ -1,5 +1,6 @@
 ﻿namespace SportsPro.Models
 {
+
     public class Incident
     {
 		public int IncidentID { get; set; }
@@ -13,8 +14,10 @@
 
 		public int ProductID { get; set; }                    // foreign key property
 		public Product Product { get; set; } = null!;         // navigation property
+        public Product TEST { get; set; } = null!;         // navigation property
 
-		public int TechnicianID { get; set; }                 // foreign key property 
+
+        public int TechnicianID { get; set; }                 // foreign key property 
 		public Technician Technician { get; set; } = null!;   // navigation property
 
 		
