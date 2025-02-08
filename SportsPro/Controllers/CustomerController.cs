@@ -59,30 +59,26 @@ namespace SportsPro.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CustomerID,FirstName,LastName,Address,City,State,PostalCode,Phone,Email,CountryID")] Customer customer)
+        public IActionResult Create(Customer model)
         {
+            if (model.Country == null) 
+            {
+                model.Country = new Country(); 
+                model.Country.CountryID = model.CountryID;
+            }
             if (ModelState.IsValid)
             {
-                // Ensure the Country navigation property is set
-                customer.Country = await _context.Countries.FindAsync(customer.CountryID);
-
-                if (customer.Country == null)
-                {
-                    ModelState.AddModelError("CountryID", "Invalid country selected.");
-                    ViewData["CountryID"] = new SelectList(_context.Countries, "CountryID", "Name", customer.CountryID);
-                    return View(customer);
-                }
-
-                _context.Add(customer);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(List));
+                model.Country = _context.Countries.Find(model.CountryID);
+                _context.Add(model);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
             }
 
-            // Repopulate dropdown in case of validation error
-            ViewData["CountryID"] = new SelectList(_context.Countries, "CountryID", "Name", customer.CountryID);
-            return View(customer);
+            // Reload the countries list if the form reloads
+            ViewBag.Countries = _context.Countries.ToList();
+            return View(model);
         }
+
 
 
         // GET: Customers/Edit/5

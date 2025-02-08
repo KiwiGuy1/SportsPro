@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 
 namespace SportsPro.Models
 {
@@ -43,6 +44,7 @@ namespace SportsPro.Models
         [Required(ErrorMessage = "Please select a country.")]
         public string CountryID { get; set; } = string.Empty;
         // foreign key property
+        [ValidateNever]
         public Country Country { get; set; } = null!;           // navigation property
 
         public string FullName => FirstName + " " + LastName;   // read-only property
