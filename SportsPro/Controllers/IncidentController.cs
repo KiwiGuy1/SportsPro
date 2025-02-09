@@ -21,7 +21,10 @@ namespace SportsPro.Controllers
         // GET: Incidents
         public async Task<IActionResult> List()
         {
-            var sportsProContext = _context.Incidents.Include(i => i.Customer).Include(i => i.Product).Include(i => i.Technician);
+            var sportsProContext = _context.Incidents.Include(i => i.Customer)
+                                                    .Include(i => i.Product)
+                                                    .Include(i => i.Technician)
+                                                    .OrderBy(i => i.DateOpened);
             return View(await sportsProContext.ToListAsync());
         }
 

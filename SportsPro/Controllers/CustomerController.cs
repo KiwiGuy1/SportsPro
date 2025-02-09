@@ -21,7 +21,8 @@ namespace SportsPro.Controllers
         // GET: Customers
         public async Task<IActionResult> List()
         {
-            var sportsProContext = _context.Customers.Include(c => c.Country);
+            var sportsProContext = _context.Customers.Include(c => c.Country)
+                                                     .OrderBy(c => c.LastName); //Organized by last name of customer
             return View(await sportsProContext.ToListAsync());
         }
 
