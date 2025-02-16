@@ -9,6 +9,7 @@ using SportsPro.Models;
 
 namespace SportsPro.Controllers
 {
+    [Route("incidents")]
     public class IncidentController : Controller
     {
         private readonly SportsProContext _context;
@@ -19,6 +20,7 @@ namespace SportsPro.Controllers
         }
 
         // GET: Incidents
+        [HttpGet("")]
         public async Task<IActionResult> List()
         {
             var sportsProContext = _context.Incidents.Include(i => i.Customer)
@@ -29,6 +31,7 @@ namespace SportsPro.Controllers
         }
 
         // GET: Incidents/Details/5
+        [HttpGet("details/{id?}")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Incidents == null)
@@ -50,6 +53,7 @@ namespace SportsPro.Controllers
         }
 
         // GET: Incidents/Create
+        [HttpGet("create")]
         public IActionResult Create()
         {
             ViewData["CustomerID"] = new SelectList(_context.Customers, "CustomerID", "FullName");
@@ -59,7 +63,7 @@ namespace SportsPro.Controllers
         }
 
         // POST: Incidents/Create
-        [HttpPost]
+        [HttpPost("create")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Title,Description,DateOpened,DateClosed,CustomerID,ProductID,TechnicianID")] Incident incident)
         {
@@ -77,6 +81,7 @@ namespace SportsPro.Controllers
         }
 
         // GET: Incidents/Edit/5
+        [HttpGet("edit/{id?}")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Incidents == null)
@@ -96,7 +101,7 @@ namespace SportsPro.Controllers
         }
 
         // POST: Incidents/Edit/5
-        [HttpPost]
+        [HttpPost("edit/{id}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("IncidentID,Title,Description,DateOpened,DateClosed,CustomerID,ProductID,TechnicianID")] Incident incident)
         {
@@ -132,6 +137,7 @@ namespace SportsPro.Controllers
         }
 
         // GET: Incidents/Delete/5
+        [HttpGet("delete/{id?}")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Incidents == null)
@@ -153,7 +159,7 @@ namespace SportsPro.Controllers
         }
 
         // POST: Incidents/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost("delete/{id}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {

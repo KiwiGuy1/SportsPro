@@ -9,6 +9,7 @@ using SportsPro.Models;
 
 namespace SportsPro.Controllers
 {
+    [Route("technicians")]
     public class TechnicianController : Controller
     {
         private readonly SportsProContext _context;
@@ -19,14 +20,16 @@ namespace SportsPro.Controllers
         }
 
         // GET: Technicians
+        [HttpGet("")]
         public async Task<IActionResult> List()
         {
-              return _context.Technicians != null ? 
-                          View(await _context.Technicians.ToListAsync()) :
-                          Problem("Entity set 'SportsProContext.Technicians'  is null.");
+            return _context.Technicians != null ?
+                        View(await _context.Technicians.ToListAsync()) :
+                        Problem("Entity set 'SportsProContext.Technicians'  is null.");
         }
 
         // GET: Technicians/Details/5
+        [HttpGet("details/{id?}")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Technicians == null)
@@ -45,15 +48,14 @@ namespace SportsPro.Controllers
         }
 
         // GET: Technicians/Create
+        [HttpGet("create")]
         public IActionResult Create()
         {
             return View();
         }
 
         // POST: Technicians/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost("create")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("TechnicianID,Name,Email,Phone")] Technician technician)
         {
@@ -67,6 +69,7 @@ namespace SportsPro.Controllers
         }
 
         // GET: Technicians/Edit/5
+        [HttpGet("edit/{id?}")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Technicians == null)
@@ -83,9 +86,7 @@ namespace SportsPro.Controllers
         }
 
         // POST: Technicians/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost("edit/{id}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("TechnicianID,Name,Email,Phone")] Technician technician)
         {
@@ -118,6 +119,7 @@ namespace SportsPro.Controllers
         }
 
         // GET: Technicians/Delete/5
+        [HttpGet("delete/{id?}")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Technicians == null)
@@ -136,7 +138,7 @@ namespace SportsPro.Controllers
         }
 
         // POST: Technicians/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost("delete/{id}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
@@ -149,14 +151,14 @@ namespace SportsPro.Controllers
             {
                 _context.Technicians.Remove(technician);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(List));
         }
 
         private bool TechnicianExists(int id)
         {
-          return (_context.Technicians?.Any(e => e.TechnicianID == id)).GetValueOrDefault();
+            return (_context.Technicians?.Any(e => e.TechnicianID == id)).GetValueOrDefault();
         }
     }
 }

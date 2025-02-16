@@ -9,7 +9,8 @@ using SportsPro.Models;
 
 namespace SportsPro.Controllers
 {
-    public class CustomerController : Controller
+    [Route("customers")] 
+  public class CustomerController : Controller
     {
         private readonly SportsProContext _context;
 
@@ -18,7 +19,8 @@ namespace SportsPro.Controllers
             _context = context;
         }
 
-        // GET: Customers
+        // GET: customers
+        [HttpGet("")]
         public async Task<IActionResult> List()
         {
             var sportsProContext = _context.Customers.Include(c => c.Country)
@@ -26,7 +28,8 @@ namespace SportsPro.Controllers
             return View(await sportsProContext.ToListAsync());
         }
 
-        // GET: Customers/Details/5
+        // GET: customers/details/5
+        [HttpGet("details/{id?}")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Customers == null)
@@ -45,7 +48,8 @@ namespace SportsPro.Controllers
             return View(customer);
         }
 
-        // GET: Customers/Create
+        // GET: customers/create
+        [HttpGet("create")]
         public IActionResult Create()
         {
             ViewData["CountryID"] = new SelectList(
@@ -55,13 +59,10 @@ namespace SportsPro.Controllers
             return View();
         }
 
-
-        // POST: Customers/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        // POST: customers/create
+        [HttpPost("create")]
         public IActionResult Create(Customer model)
-        { 
+        {
             if (ModelState.IsValid)
             {
                 model.Country = _context.Countries.Find(model.CountryID);
@@ -75,7 +76,8 @@ namespace SportsPro.Controllers
             return View(model);
         }
 
-        // GET: Customers/Edit/5
+        // GET: customers/edit/5
+        [HttpGet("edit/{id?}")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Customers == null)
@@ -92,10 +94,8 @@ namespace SportsPro.Controllers
                               _context.Countries.Select(c => new { c.CountryID, c.Name }), "CountryID", "Name", customer.CountryID); return View(customer);
         }
 
-        // POST: Customers/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        // POST: customers/edit/5
+        [HttpPost("edit/{id}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("CustomerID,FirstName,LastName,Address,City,State,PostalCode,Phone,Email,CountryID")] Customer customer)
         {
@@ -128,7 +128,8 @@ namespace SportsPro.Controllers
                    _context.Countries.Select(c => new { c.CountryID, c.Name }), "CountryID", "Name", customer.CountryID); return View(customer);
         }
 
-        // GET: Customers/Delete/5
+        // GET: customers/delete/5
+        [HttpGet("delete/{id?}")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Customers == null)
@@ -147,8 +148,8 @@ namespace SportsPro.Controllers
             return View(customer);
         }
 
-        // POST: Customers/Delete/5
-        [HttpPost, ActionName("Delete")]
+        // POST: customers/delete/5
+        [HttpPost("delete/{id}"), ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
@@ -161,14 +162,14 @@ namespace SportsPro.Controllers
             {
                 _context.Customers.Remove(customer);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(List));
         }
 
         private bool CustomerExists(int id)
         {
-          return (_context.Customers?.Any(e => e.CustomerID == id)).GetValueOrDefault();
+            return (_context.Customers?.Any(e => e.CustomerID == id)).GetValueOrDefault();
         }
     }
 }
