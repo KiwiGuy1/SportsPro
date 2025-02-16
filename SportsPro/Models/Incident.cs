@@ -5,7 +5,8 @@
     public class Incident
     {
 		public int IncidentID { get; set; }
-		        [Required]
+
+		[Required]
 
 		public string Title { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
