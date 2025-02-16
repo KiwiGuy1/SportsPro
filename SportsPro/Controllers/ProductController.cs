@@ -9,6 +9,7 @@ using SportsPro.Models;
 
 namespace SportsPro.Controllers
 {
+    [Route("products")]
     public class ProductController : Controller
     {
         private readonly SportsProContext _context;
@@ -19,14 +20,16 @@ namespace SportsPro.Controllers
         }
 
         // GET: Product
+        [HttpGet("")]
         public async Task<IActionResult> List()
         {
-              return _context.Products != null ? 
-                          View(await _context.Products.ToListAsync()) :
-                          Problem("Entity set 'SportsProContext.Products'  is null.");
+            return _context.Products != null ?
+                        View(await _context.Products.ToListAsync()) :
+                        Problem("Entity set 'SportsProContext.Products'  is null.");
         }
 
         // GET: Product/Details/5
+        [HttpGet("details/{id?}")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Products == null)
@@ -45,6 +48,7 @@ namespace SportsPro.Controllers
         }
 
         // GET: Product/Create
+        [HttpGet("create")]
         public IActionResult Create()
         {
             var model = new Product(); // This ensures ReleaseDate is set to DateTime.Now
@@ -52,9 +56,7 @@ namespace SportsPro.Controllers
         }
 
         // POST: Product/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost("create")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ProductID,ProductCode,Name,YearlyPrice,ReleaseDate")] Product product)
         {
@@ -68,6 +70,7 @@ namespace SportsPro.Controllers
         }
 
         // GET: Product/Edit/5
+        [HttpGet("edit/{id?}")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Products == null)
@@ -84,9 +87,7 @@ namespace SportsPro.Controllers
         }
 
         // POST: Product/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost("edit/{id}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ProductID,ProductCode,Name,YearlyPrice,ReleaseDate")] Product product)
         {
@@ -119,6 +120,7 @@ namespace SportsPro.Controllers
         }
 
         // GET: Product/Delete/5
+        [HttpGet("delete/{id?}")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Products == null)
@@ -137,7 +139,7 @@ namespace SportsPro.Controllers
         }
 
         // POST: Product/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost("delete/{id}"), ActionName("DeleteConfirmed")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
@@ -150,14 +152,14 @@ namespace SportsPro.Controllers
             {
                 _context.Products.Remove(product);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(List));
         }
 
         private bool ProductExists(int id)
         {
-          return (_context.Products?.Any(e => e.ProductID == id)).GetValueOrDefault();
+            return (_context.Products?.Any(e => e.ProductID == id)).GetValueOrDefault();
         }
     }
 }
