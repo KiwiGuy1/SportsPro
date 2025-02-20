@@ -41,11 +41,31 @@
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+<div class="container">
+    <main role="main" class="pb-3">
+        <!-- Display TempData message -->
+        @{
+            var successMessage = TempData["SuccessMessage"] as string;
+            var errorMessage = TempData["ErrorMessage"] as string;
+        }
+
+        @if (!string.IsNullOrEmpty(successMessage))
+        {
+            <div class="bg-info text-white p-4 my-4 rounded text-center display-6">
+                <b>@successMessage</b>
+            </div>
+        }
+
+        @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <div class="bg-danger text-white p-4 my-4 rounded text-center display-6">
+                <b>@errorMessage</b>
+            </div>
+        }
+
+        @RenderBody()
+    </main>
+</div>
 
     <footer class="border-top footer text-muted mt-3 pb-3">
         <div class="container">&copy; @DateTime.Now.Year - SportsPro</div>
