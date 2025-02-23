@@ -44,7 +44,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="CountryID" class="control-label"></label>
-                <select asp-for="CountryID" asp-items="@(ViewData["CountryID"] as SelectList)" class="form-control">
+                <select asp-for="CountryID" asp-items="@(new SelectList(ViewBag.Countries, "CountryID", "Name"))" class="form-control">
                     <option value="">Select a country...</option>
                 </select>
                 <span asp-validation-for="CountryID" class="text-danger"></span>
