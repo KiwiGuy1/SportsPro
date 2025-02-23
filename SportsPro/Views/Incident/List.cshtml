@@ -16,6 +16,7 @@
             <th>Product</th>
             <th>Date Opened</th>
             <th>Actions</th>
+
         </tr>
     </thead>
     <tbody>
@@ -28,6 +29,8 @@
                 <td>@item.DateOpened</td>
                 <td class="text-center">
                     <a asp-action="Edit" class="btn btn-sm btn-primary" asp-route-id="@item.IncidentID">Edit</a>
+                </td>
+                <td class="text-center">
                     <a asp-action="Delete" class="btn btn-sm btn-primary" asp-route-id="@item.IncidentID">Delete</a>
                 </td>
             </tr>
