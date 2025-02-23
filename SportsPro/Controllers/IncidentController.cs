@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SportsPro.Models;
+using SportsPro.ViewModels;
 
 namespace SportsPro.Controllers
 {
@@ -21,13 +22,21 @@ namespace SportsPro.Controllers
 
         // GET: Incidents
         [HttpGet("")]
-        public async Task<IActionResult> List()
+        public async Task<IActionResult> List(String filter)
         {
-            var sportsProContext = _context.Incidents.Include(i => i.Customer)
-                                                    .Include(i => i.Product)
-                                                    .Include(i => i.Technician)
-                                                    .OrderBy(i => i.DateOpened);
-            return View(await sportsProContext.ToListAsync());
+            var incidents = _context.Incidents.Include(i => i.Customer)
+                                              .Include(i => i.Product)
+                                              .Include(i => i.Technician)
+                                              .OrderBy(i => i.DateOpened)
+                                              .ToList();
+
+            var viewModel = new IncidentManagerViewModel
+            {
+                Incidents = incidents,
+                Filter = filter ?? "All"
+            };
+
+            return View(viewModel);
         }
 
         // GET: Incidents/Details/5
@@ -56,10 +65,14 @@ namespace SportsPro.Controllers
         [HttpGet("create")]
         public IActionResult Create()
         {
-            ViewData["CustomerID"] = new SelectList(_context.Customers, "CustomerID", "FullName");
-            ViewData["ProductID"] = new SelectList(_context.Products, "ProductID", "Name");
-            ViewData["TechnicianID"] = new SelectList(_context.Technicians, "TechnicianID", "Email");
-            return View();
+            var viewModel = new IncidentEditViewModel
+            {
+                Customers = _context.Customers.ToList(),
+                Products = _context.Products.ToList(),
+                Technicians = _context.Technicians.Where(t => t.TechnicianID != -1).ToList(),
+                Operation = "Add"
+            };
+            return View(viewModel);
         }
 
         // POST: Incidents/Create
@@ -74,10 +87,16 @@ namespace SportsPro.Controllers
                 return RedirectToAction(nameof(List));
             }
 
-            ViewData["CustomerID"] = new SelectList(_context.Customers, "CustomerID", "FullName", incident.CustomerID);
-            ViewData["ProductID"] = new SelectList(_context.Products, "ProductID", "Name", incident.ProductID);
-            ViewData["TechnicianID"] = new SelectList(_context.Technicians, "TechnicianID", "Email", incident.TechnicianID);
-            return View(incident);
+            var viewModel = new IncidentEditViewModel
+            {
+                Customers = _context.Customers.ToList(),
+                Products = _context.Products.ToList(),
+                Technicians = _context.Technicians.Where(t => t.TechnicianID != -1).ToList(),
+                Incident = incident,
+                Operation = "Add"
+            };
+
+            return View(viewModel);
         }
 
         // GET: Incidents/Edit/5
@@ -94,10 +113,17 @@ namespace SportsPro.Controllers
             {
                 return NotFound();
             }
-            ViewData["CustomerID"] = new SelectList(_context.Customers, "CustomerID", "CustomerID", incident.CustomerID);
-            ViewData["ProductID"] = new SelectList(_context.Products, "ProductID", "Name", incident.ProductID);
-            ViewData["TechnicianID"] = new SelectList(_context.Technicians, "TechnicianID", "Email", incident.TechnicianID);
-            return View(incident);
+
+            var viewModel = new IncidentEditViewModel
+            {
+                Customers = _context.Customers.ToList(),
+                Products = _context.Products.ToList(),
+                Technicians = _context.Technicians.Where(t => t.TechnicianID != -1).ToList(),
+                Incident = incident,
+                Operation = "Edit"
+            };
+
+            return View(viewModel);
         }
 
         // POST: Incidents/Edit/5
@@ -130,10 +156,16 @@ namespace SportsPro.Controllers
                 }
                 return RedirectToAction(nameof(List));
             }
-            ViewData["CustomerID"] = new SelectList(_context.Customers, "CustomerID", "CustomerID", incident.CustomerID);
-            ViewData["ProductID"] = new SelectList(_context.Products, "ProductID", "Name", incident.ProductID);
-            ViewData["TechnicianID"] = new SelectList(_context.Technicians, "TechnicianID", "Email", incident.TechnicianID);
-            return View(incident);
+
+            var viewModel = new IncidentEditViewModel
+            {
+                Customers = _context.Customers.ToList(),
+                Products = _context.Products.ToList(),
+                Technicians = _context.Technicians.Where(t => t.TechnicianID != -1).ToList(),
+                Incident = incident,
+                Operation = "Edit"
+            };
+            return View(viewModel);
         }
 
         // GET: Incidents/Delete/5
