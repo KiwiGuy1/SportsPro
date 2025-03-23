@@ -1,0 +1,43 @@
+﻿@model SportsPro.ViewModels.TechnicianIncidentViewModel
+
+@{
+    ViewData["Title"] = "Technician Incident List";
+}
+
+<h2>Technician: @Model.TechnicianName</h2>
+<h4>Assigned/Open Incidents</h4>
+
+@if (Model.Incidents != null && Model.Incidents.Any())
+{
+    <table class="table table-bordered table-striped mt-3">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Customer</th>
+                <th>Product</th>
+                <th>Date Opened</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var incident in Model.Incidents)
+            {
+                <tr>
+                    <td>@incident.Title</td>
+                    <td>@incident.Customer</td>
+                    <td>@incident.Product.Name</td>
+                    <td>@incident.DateOpened.ToShortDateString()</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@incident.IncidentID" class="btn btn-primary btn-sm">Edit</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p class="text-info">There are no open incidents assigned to this technician.</p>
+}
+
+<a asp-action="GetTechnician" class="btn btn-secondary mt-3">Switch Technician</a>

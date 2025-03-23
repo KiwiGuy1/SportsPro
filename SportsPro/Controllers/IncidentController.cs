@@ -209,6 +209,59 @@ namespace SportsPro.Controllers
             return RedirectToAction(nameof(List));
         }
 
+        // GET: /techincident
+        [HttpGet("techincident")]
+        public async Task<IActionResult> GetTechnician()
+        {
+            var technicians = await _context.Technicians
+                .Select(t => new SelectListItem
+                {
+                    Value = t.TechnicianID.ToString(),
+                    Text = t.Name
+                }).ToListAsync();
+
+            var model = new TechnicianIncidentViewModel
+            {
+                Technicians = technicians
+            };
+
+            return View("Select", model);
+        }
+
+        // POST: /techincident/list
+        [HttpPost("techincident/list")]
+        public async Task<IActionResult> ListIncidents(TechnicianIncidentViewModel model)
+        {
+            if (!ModelState.IsValid || model.TechnicianId == null)
+            {
+                model.Technicians = await _context.Technicians
+                    .Select(t => new SelectListItem
+                    {
+                        Value = t.TechnicianID.ToString(),
+                        Text = t.Name
+                    }).ToListAsync();
+
+                return View("Select", model);
+            }
+
+            var technician = await _context.Technicians.FindAsync(model.TechnicianId);
+            var incidents = await _context.Incidents
+                .Include(i => i.Customer)
+                .Include(i => i.Product)
+                .Where(i => i.TechnicianID == model.TechnicianId && i.DateClosed == null)
+                .ToListAsync();
+
+            var viewModel = new TechnicianIncidentViewModel
+            {
+                TechnicianId = model.TechnicianId,
+                TechnicianName = technician?.Name,
+                Incidents = incidents
+            };
+
+            return View("IncidentList", viewModel);
+        }
+
+
         private bool IncidentExists(int id)
         {
             return (_context.Incidents?.Any(e => e.IncidentID == id)).GetValueOrDefault();

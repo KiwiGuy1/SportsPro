@@ -10,7 +10,7 @@
 
 <form asp-action="IncidentsByTech" method="post">
     <div class="mb-3">
-        <label asp-for="TechnicianId" class="form-label">Technician</label>
+        
         <select asp-for="TechnicianId" asp-items="Model.Technicians" class="form-select">
             <option value="">-- Select Technician --</option>
         </select>
