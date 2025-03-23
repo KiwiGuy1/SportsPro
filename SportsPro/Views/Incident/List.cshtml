@@ -1,4 +1,4 @@
-﻿@model SportsPro.ViewModels.IncidentManagerViewModel
+﻿@model SportsPro.ViewModels.TechnicianIncidentViewModel
 
 @{
     ViewData["Title"] = "Incident Manager";
@@ -6,8 +6,28 @@
 
 <h1>Incident Manager</h1>
 
-<p>Filter: @Model.Filter</p>
-
+<div class="mb-3">
+    <ul class="nav nav-pills">
+        <li class="nav-item">
+            <a class="nav-link @(Model.Filter == "All" ? "active" : "")"
+               asp-action="List" asp-route-filter="All">
+                All incidents
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link @(Model.Filter == "Unassigned" ? "active" : "")"
+               asp-action="List" asp-route-filter="Unassigned">
+                Unassigned incidents
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link @(Model.Filter == "Open" ? "active" : "")"
+               asp-action="List" asp-route-filter="Open">
+                Open incidents
+            </a>
+        </li>
+    </ul>
+</div>
 <table class="table table-bordered table-striped">
     <thead>
         <tr>

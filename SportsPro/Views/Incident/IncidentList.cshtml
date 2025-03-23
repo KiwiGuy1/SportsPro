@@ -7,6 +7,7 @@
 <h2>Technician: @Model.TechnicianName</h2>
 <h4>Assigned/Open Incidents</h4>
 
+
 @if (Model.Incidents != null && Model.Incidents.Any())
 {
     <table class="table table-bordered table-striped mt-3">
@@ -24,7 +25,7 @@
             {
                 <tr>
                     <td>@incident.Title</td>
-                    <td>@incident.Customer</td>
+                    <td>@incident.Customer.FullName</td>
                     <td>@incident.Product.Name</td>
                     <td>@incident.DateOpened.ToShortDateString()</td>
                     <td>

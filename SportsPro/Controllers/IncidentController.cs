@@ -22,18 +22,43 @@ namespace SportsPro.Controllers
 
         // GET: Incidents
         [HttpGet("")]
-        public async Task<IActionResult> List(String filter)
+        public async Task<IActionResult> List(string filter)
         {
-            var incidents = _context.Incidents.Include(i => i.Customer)
-                                              .Include(i => i.Product)
-                                              .Include(i => i.Technician)
-                                              .OrderBy(i => i.DateOpened)
-                                              .ToList();
+            // Start with a base query
+            var incidentsQuery = _context.Incidents
+                .Include(i => i.Customer)
+                .Include(i => i.Product)
+                .Include(i => i.Technician)
+                .OrderBy(i => i.DateOpened);
 
-            var viewModel = new IncidentManagerViewModel
+            // Apply filtering based on 'filter'
+            switch (filter)
+            {
+                case "Unassigned":
+                    // Show incidents that do NOT have a Technician
+                    incidentsQuery = (IOrderedQueryable<Incident>)incidentsQuery.Where(i => i.TechnicianID == null);
+                    break;
+
+                case "Open":
+                    // Show incidents that do NOT have a closing date
+                    incidentsQuery = (IOrderedQueryable<Incident>)incidentsQuery.Where(i => i.DateClosed == null);
+                    break;
+
+                case "All":
+                default:
+                    // If filter is null or something else, default to "All"
+                    filter = "All";
+                    break;
+            }
+
+            // Execute the filtered query
+            var incidents = await incidentsQuery.ToListAsync();
+
+            // Build your ViewModel
+            var viewModel = new TechnicianIncidentViewModel
             {
                 Incidents = incidents,
-                Filter = filter ?? "All"
+                Filter = filter
             };
 
             return View(viewModel);

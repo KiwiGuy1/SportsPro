@@ -6,6 +6,8 @@ namespace SportsPro.ViewModels
 {
     public class TechnicianIncidentViewModel
     {
+        public string Filter { get; set; } = "All"; // default to "All"
+
         [Required(ErrorMessage = "Please select a technician.")]
         public int? TechnicianId { get; set; }
 
