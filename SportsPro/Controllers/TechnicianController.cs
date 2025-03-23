@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SportsPro.Models;
+using SportsPro.ViewModels;
 
 namespace SportsPro.Controllers
 {

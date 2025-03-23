@@ -48,9 +48,7 @@ namespace SportsPro.Controllers
         [HttpGet("create")]
         public IActionResult Create()
         {
-            ViewData["CountryID"] = new SelectList(
-                _context.Countries, "CountryID", "Name"
-            );
+            ViewBag.Countries = _context.Countries.ToList();
 
             return View();
         }
@@ -86,8 +84,8 @@ namespace SportsPro.Controllers
             {
                 return NotFound();
             }
-            ViewData["CountryID"] = new SelectList(
-                              _context.Countries.Select(c => new { c.CountryID, c.Name }), "CountryID", "Name", customer.CountryID); return View(customer);
+            ViewBag.Countries = _context.Countries.Select(c => new { c.CountryID, c.Name }).ToList();
+            return View(customer);
         }
 
         // POST: customers/edit/5
@@ -120,8 +118,7 @@ namespace SportsPro.Controllers
                 }
                 return RedirectToAction(nameof(List));
             }
-            ViewData["CountryID"] = new SelectList(
-                   _context.Countries.Select(c => new { c.CountryID, c.Name }), "CountryID", "Name", customer.CountryID); return View(customer);
+            return View(customer);
         }
 
         // GET: customers/delete/5

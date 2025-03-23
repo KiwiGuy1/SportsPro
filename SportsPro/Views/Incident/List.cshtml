@@ -1,54 +1,43 @@
-﻿@model IEnumerable<SportsPro.Models.Incident>
+﻿@model SportsPro.ViewModels.IncidentManagerViewModel
 
 @{
     ViewData["Title"] = "Incident Manager";
 }
 
-<h1>Index</h1>
+<h1>Incident Manager</h1>
+
+<p>Filter: @Model.Filter</p>
 
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Customer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Product)
-            </th>
-            <th>
-                Date Opened
-            </th>
+            <th>Title</th>
+            <th>Customer</th>
+            <th>Product</th>
+            <th>Date Opened</th>
+            <th>Actions</th>
+
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Customer.FullName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Product.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateOpened)
-            </td>
-            <td class="text-center">
-                <a asp-action="Edit" class="btn btn-sm btn-primary" asp-route-id="@item.IncidentID">Edit</a>
-            </td>
-             <td class="text-center">
-                <a asp-action="Delete" class="btn btn-sm btn-primary" asp-route-id="@item.IncidentID">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Incidents)
+        {
+            <tr>
+                <td>@item.Title</td>
+                <td>@item.Customer.FullName</td>
+                <td>@item.Product.Name</td>
+                <td>@item.DateOpened</td>
+                <td class="text-center">
+                    <a asp-action="Edit" class="btn btn-sm btn-primary" asp-route-id="@item.IncidentID">Edit</a>
+                </td>
+                <td class="text-center">
+                    <a asp-action="Delete" class="btn btn-sm btn-primary" asp-route-id="@item.IncidentID">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 
-<p >
+<p>
     <a class="btn btn-primary" asp-action="Create">Add Incident</a>
 </p>
