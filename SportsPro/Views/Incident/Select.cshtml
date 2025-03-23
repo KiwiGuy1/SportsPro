@@ -4,11 +4,11 @@
     ViewData["Title"] = "Select Technician";
 }
 
-<h2>Select a Technician</h2>
+<h2>Select Technician</h2>
 
 <div asp-validation-summary="All" class="text-danger"></div>
 
-<form asp-action="Incidents" method="post">
+<form asp-action="IncidentsByTech" method="post">
     <div class="mb-3">
         <label asp-for="TechnicianId" class="form-label">Technician</label>
         <select asp-for="TechnicianId" asp-items="Model.Technicians" class="form-select">
